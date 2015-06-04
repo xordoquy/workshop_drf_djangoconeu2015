@@ -15,8 +15,8 @@ class TestTask(APITestCase):
         url = reverse('task-list')
         data = {
             "name": "demo",
-            "owner": user.id,
-            "categories": [category.id],
+            "owner": user.username,
+            "categories": [category.name],
             "done": False,
         }
         response = self.client.post(url, data, format='json')
