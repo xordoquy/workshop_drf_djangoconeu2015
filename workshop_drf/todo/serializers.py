@@ -10,6 +10,8 @@ class Category(serializers.ModelSerializer):
 
 
 class Task(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        'task-detail', source='id', read_only=True)
     owner = serializers.SlugRelatedField(
         slug_field='username',
         queryset=get_user_model().objects.all())
@@ -20,5 +22,5 @@ class Task(serializers.ModelSerializer):
 
     class Meta:
         model = models.Task
-        fields = ('id', 'name', 'owner', 'categories', 'done')
+        fields = ('id', 'name', 'owner', 'categories', 'done', 'url')
 

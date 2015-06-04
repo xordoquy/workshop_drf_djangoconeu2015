@@ -18,6 +18,7 @@ class TestTask(APITestCase):
             "owner": user.username,
             "categories": [category.name],
             "done": False,
+            'url': 'http://testserver/task/1/', 
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(
