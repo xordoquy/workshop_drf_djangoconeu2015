@@ -14,7 +14,7 @@ class Task(serializers.ModelSerializer):
         'task-detail', source='id', read_only=True)
     owner = serializers.SlugRelatedField(
         slug_field='username',
-        queryset=get_user_model().objects.all())
+        read_only=True)
     categories = serializers.SlugRelatedField(
         slug_field='name',
         queryset=models.Category.objects.all(),
@@ -23,4 +23,10 @@ class Task(serializers.ModelSerializer):
     class Meta:
         model = models.Task
         fields = ('id', 'name', 'owner', 'categories', 'done', 'url')
+
+    def create(self, validated_data):
+        categories = validated_data.pop('categories')
+        task = models.Task.objects.create(**validated_data)
+        task.categories = categories
+        return task
 

@@ -11,3 +11,6 @@ class Task(viewsets.ModelViewSet):
     queryset = models.Task.objects.all()
     serializer_class = serializers.Task
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
